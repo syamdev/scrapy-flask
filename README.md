@@ -92,7 +92,11 @@ jobs = response.xpath('//p[@class="result-info"]')
 ```python
 for job in jobs:
     title = job.xpath('a/text()').extract_first()
-    address = job.xpath('span[@class="result-meta"]/span[@class="result-hood"]/text()').extract_first("")[2:-1]
+    address = job.xpath('span[@class="result-meta"]/span[@class="result-hood"]/text()').extract_first()
+    if not address:
+        address = 'N/A'
+    else:
+        address = address[2:-1]
     date = job.xpath('time[@class="result-date"]/@datetime').extract_first()
     relative_url = job.xpath('a/@href').extract_first()
     absolute_url = response.urljoin(relative_url)
@@ -124,4 +128,51 @@ yield scrapy.Request(absolute_next_url, callback=self.parse)
 ### Run Spider and Store Data
 ```shell
 $ scrapy crawl jobs -o result-jobs-multi-pages.csv
+```
+
+## Scrapy Spider #4 – Job Descriptions
+The spider will open each job URL and scrape its description.
+
+### Pass the Data to a Second Function
+Change the **yield** data in parse() function with this code:
+```python
+yield scrapy.Request(absolute_url,
+                     callback=self.parse_page,
+                     meta={'URL': absolute_url,
+                           'Date': date,
+                           'Title': title,
+                           'Address': address})
+
+```
+
+### Create Function to Extract Specific Data
+Add parse_page() function and extract description, compensation, employment. If data is empty, we will fill it with 'N/A' string.
+```python
+def parse_page(self, response):
+    url = response.meta['URL']
+    date = response.meta['Date']
+    title = response.meta['Title']
+    address = response.meta['Address']
+    description = "".join(line.rstrip("\n") for line in response.xpath('//*[@id="postingbody"]/text()').extract()).strip() or 'N/A'
+    compensation = response.xpath('//p[@class="attrgroup"]/span/b/text()')[0].extract() or 'N/A'
+    employment_type = response.xpath('//p[@class="attrgroup"]/span/b/text()')[1].extract() or 'N/A'
+
+    yield {'URL': url,
+           'Date': date,
+           'Title': title,
+           'Address': address,
+           'Description': description,
+           'Compensation': compensation,
+           'Employment': employment_type}
+```
+
+### Run Spider and Store Scrapy Output Data to CSV, XML or JSON
+```shell
+$ scrapy crawl jobs -o result-jobs-multi-pages-content.csv
+```
+```shell
+$ scrapy crawl jobs -o result-jobs-multi-pages-content.xml
+```
+```shell
+$ scrapy crawl jobs -o result-jobs-multi-pages-content.json
 ```
