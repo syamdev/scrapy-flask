@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import re
 
 
 class JobsSpider(scrapy.Spider):

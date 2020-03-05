@@ -176,3 +176,24 @@ $ scrapy crawl jobs -o result-jobs-multi-pages-content.xml
 ```shell
 $ scrapy crawl jobs -o result-jobs-multi-pages-content.json
 ```
+
+## Settings
+Edit the settings in **settings.py** file
+```python
+USER_AGENT = 'add with your own User Agent'
+ROBOTSTXT_OBEY = False
+AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+```
+### Pause and Resume Crawls
+Sometimes, for big sites, it’s desirable to pause crawls and be able to resume them later.
+Use this command: ("jobs" is spider name)
+```shell
+$ scrapy crawl jobs -s JOBDIR=crawls/jobs-1
+```
+Store data with pausing/resuming feature.
+```shell
+$ scrapy crawl jobs -o result-jobs-multi-pages-content.csv -s JOBDIR=crawls/jobs-1
+```
