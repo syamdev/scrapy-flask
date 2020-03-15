@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from craigslist.items import CraigslistItem
 
 
 class JobsSpider(scrapy.Spider):
@@ -42,10 +43,20 @@ class JobsSpider(scrapy.Spider):
         compensation = response.xpath('//p[@class="attrgroup"]/span/b/text()')[0].extract() or 'N/A'
         employment_type = response.xpath('//p[@class="attrgroup"]/span/b/text()')[1].extract() or 'N/A'
 
-        yield {'URL': url,
-               'Date': date,
-               'Title': title,
-               'Address': address,
-               'Description': description,
-               'Compensation': compensation,
-               'Employment': employment_type}
+        # yield {'URL': url,
+        #        'Date': date,
+        #        'Title': title,
+        #        'Address': address,
+        #        'Description': description,
+        #        'Compensation': compensation,
+        #        'Employment': employment_type}
+
+        item = CraigslistItem()
+        item['url'] = url
+        item['date'] = date
+        item['title'] = title
+        item['address'] = address
+        item['description'] = description
+        item['compensation'] = compensation
+        item['employment_type'] = employment_type
+        return item

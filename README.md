@@ -197,3 +197,7 @@ Store data with pausing/resuming feature.
 ```shell
 $ scrapy crawl jobs -o result-jobs-multi-pages-content.csv -s JOBDIR=crawls/jobs-1
 ```
+
+## Scrapy Items
+- Define the models for your scraped items in items.py
+- Create and return the items in jobs.py
