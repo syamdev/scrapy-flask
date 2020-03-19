@@ -1,8 +1,8 @@
-<<<<<<< HEAD
-# Scrapy-Craigslist
-Web Scraping Craigslist Healthcare Jobs in LA with Scrapy
 
-link: https://losangeles.craigslist.org/search/hea
+# Scrapy Flask Integration
+Web Scraping Craigslist Healthcare Jobs in LA with Scrapy and Flask to view data.
+
+link: https://losangeles.craigslist.org/search/ant/hea
 
 ## Install Scrapy
 
@@ -203,6 +203,6 @@ $ scrapy crawl jobs -o result-jobs-multi-pages-content.csv -s JOBDIR=crawls/jobs
 - Define the models for your scraped items in items.py
 - Create and return the items in jobs.py
 
-## Flask
+## Integrating Flask
 - Scrape data on flask
 - View data on flask
