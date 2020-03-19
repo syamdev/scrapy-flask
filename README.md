@@ -201,3 +201,7 @@ $ scrapy crawl jobs -o result-jobs-multi-pages-content.csv -s JOBDIR=crawls/jobs
 ## Scrapy Items
 - Define the models for your scraped items in items.py
 - Create and return the items in jobs.py
+
+## Flask
+- Scrape data on flask
+- View data on flask

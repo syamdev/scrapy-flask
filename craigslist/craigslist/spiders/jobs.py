@@ -6,7 +6,7 @@ from craigslist.items import CraigslistItem
 class JobsSpider(scrapy.Spider):
     name = 'jobs'
     allowed_domains = ['losangeles.craigslist.org']
-    start_urls = ['https://losangeles.craigslist.org/search/hea/']
+    start_urls = ['https://losangeles.craigslist.org/search/ant/hea']
 
     def parse(self, response):
         jobs = response.xpath('//p[@class="result-info"]')
@@ -39,24 +39,16 @@ class JobsSpider(scrapy.Spider):
         date = response.meta['Date']
         title = response.meta['Title']
         address = response.meta['Address']
-        description = "".join(line.rstrip("\n") for line in response.xpath('//*[@id="postingbody"]/text()').extract()).strip() or 'N/A'
-        compensation = response.xpath('//p[@class="attrgroup"]/span/b/text()')[0].extract() or 'N/A'
-        employment_type = response.xpath('//p[@class="attrgroup"]/span/b/text()')[1].extract() or 'N/A'
-
-        # yield {'URL': url,
-        #        'Date': date,
-        #        'Title': title,
-        #        'Address': address,
-        #        'Description': description,
-        #        'Compensation': compensation,
-        #        'Employment': employment_type}
+        #description = "".join(line.rstrip("\n") for line in response.xpath('//*[@id="postingbody"]/text()').extract()).strip() or 'N/A'
+        compensation = response.xpath('//span[contains(text(), "compensation")]/b/text()').extract_first() or 'N/A'
+        employment_type = response.xpath('//span[contains(text(), "employment type")]/b/text()').extract_first() or 'N/A'
 
         item = CraigslistItem()
         item['url'] = url
         item['date'] = date
         item['title'] = title
         item['address'] = address
-        item['description'] = description
+        #item['description'] = description
         item['compensation'] = compensation
         item['employment_type'] = employment_type
         return item

@@ -13,6 +13,6 @@ class CraigslistItem(scrapy.Item):
     date = scrapy.Field()
     title = scrapy.Field()
     address = scrapy.Field()
-    description = scrapy.Field()
+    #description = scrapy.Field()
     compensation = scrapy.Field()
     employment_type = scrapy.Field()
