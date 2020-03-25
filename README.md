@@ -4,6 +4,12 @@ Web Scraping Craigslist Healthcare Jobs in LA with Scrapy and Flask to view data
 
 link: https://losangeles.craigslist.org/search/ant/hea
 
+## Demo Site
+
+Scrape on background, then view the result on .json file
+
+link: https://bit.ly/webscrapingdemo
+
 ## Install Scrapy
 
 You can install Scrapy using pip on terminal with this command:
